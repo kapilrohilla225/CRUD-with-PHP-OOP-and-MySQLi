@@ -1,26 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD-with-PHP-OOP</title>
+<?php 
+    include 'header.php';
+    $db = new Database();
+    $uid = $_GET['id'];
+    // echo $id;
+    $query = "SELECT *FROM tbl WHERE id = $uid";
+    $data = $db->select($query)->fetch_assoc();
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-tittle">CRUD-with-PHP-OOP MySQLi</h3>
-                    </div>
-                    <div class="card-footer">
-                        <h3 class="card-tittle">Developed By Geeta Technical Hub</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+    if(isset($_POST['update'])){
+      $name = $_POST['name'];
+      $roll = $_POST['roll'];
+      $course = $_POST['course'];
+      if($name == ""||$roll==""||$course==""){
+        $error = "<div class='alert alert-danger'>Feild must not be Empty!</div>";
+      }else{
+        $query = "UPDATE tbl
+        SET
+        name = '$name',
+        roll = '$roll',
+        course = '$course'
+        WHERE id = $uid
+        ";
+        $update = $db->update($query);
+      }
+ }
+ ?> 
+ <div class="card-body">
+ <form action=" " method='POST'>
+  <div class="mb-3 mt-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" value="<?php echo $data['name']; ?>" class="form-control" id="name" placeholder="Enter Name" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="roll" class="form-label">Roll:</label>
+    <input type="text" value="<?php echo $data['roll']; ?>" class="form-control" id="roll" placeholder="Enter Roll" name="roll">
+  </div>
+
+  <div class="mb-3">
+    <label for="pwd" class="form-label">Course:</label>
+    <input type="text" value="<?php echo $data['course']; ?>" class="form-control" id="course" placeholder="Enter Course" name="course">
+  </div>
+  
+  <button type="submit" name="update" class="btn btn-primary">Update</button>
+  <button type="submit" class="btn btn-primary">Delete</button>
+  <a class="btn btn-primary" href="index.php">Go Back</a>
+</form>
+ </div>
+  <?php 
+    include 'footer.php';
+ ?> 

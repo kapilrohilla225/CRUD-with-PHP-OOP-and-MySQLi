@@ -1,46 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD-with-PHP-OOP</title>
+<?php 
+    include 'header.php';
+    $db = new Database();
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-tittle">CRUD-with-PHP-OOP MySQLi</h3>
-                    </div>
-                    <form>
-  <fieldset disabled>
-    <legend>Disabled fieldset example</legend>
-    <div class="mb-3">
-      <label for="disabledTextInput" class="form-label">Name</label>
-      <input type="text" id="name" class="form-control" placeholder="Enter Your Name">
-    </div>
-    <div class="mb-3">
-      <label for="disabledTextInput" class="form-label">Roll</label>
-      <input type="text" id="roll" class="form-control" placeholder="Enter Your Roll">
-    </div>
-    <div class="mb-3">
-      <label for="disabledTextInput" class="form-label">Course</label>
-      <input type="text" id="course" class="form-control" placeholder="Enter Your Course">
-    </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="index.php" class="btn btn-primary">Go Back</a>
-  </fieldset>
+    if(isset($_POST['submit'])){
+      $name = $_POST['name'];
+      $roll = $_POST['roll'];
+      $course = $_POST['course'];
+
+      if($name == ""||$roll==""||$course==""){
+        $error = "<div class='alert alert-danger'>Feild must not be Empty!</div>";
+      }else{
+        $query = "INSERT INTO tbl(name,roll,course)values('$name','$roll','$course')";
+        $create = $db->insert($query);
+      }
+
+    }
+ ?> 
+ <div class="card-body">
+  <?php
+  if(isset($error)){
+    echo $error;
+  }
+  ?>
+ <form action="" method="POST">
+  <div class="mb-3 mt-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="pwd" class="form-label">Roll:</label>
+    <input type="text" class="form-control" id="roll" placeholder="Enter Roll" name="roll">
+  </div>
+
+  <div class="mb-3">
+    <label for="pwd" class="form-label">Course:</label>
+    <input type="text" class="form-control" id="course" placeholder="Enter Course" name="course">
+  </div>
+  
+  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-primary" href="index.php">Go Back</a>
 </form>
-                    <div class="card-footer">
-                        <h3 class="card-tittle">Developed By Geeta Technical Hub</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+ </div>
+  <?php 
+    include 'footer.php';
+ ?> 
